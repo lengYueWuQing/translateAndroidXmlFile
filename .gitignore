@@ -1,0 +1,9 @@
+
+Utils/target
+Utils/.settings
+basePom/target
+basePom/.settings
+translateService/target
+translateService/.settings
+translateControll/target
+translateControll/.settings

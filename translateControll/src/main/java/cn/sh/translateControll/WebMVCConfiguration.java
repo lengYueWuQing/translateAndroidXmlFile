@@ -13,7 +13,7 @@ public class WebMVCConfiguration implements WebMvcConfigurer {
 	private InterceptorForContext interceptorForContext;
 	
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/**").addResourceLocations("/", "file:translateWeb/").addResourceLocations("/", "classpath:/translateWeb/");
+		registry.addResourceHandler("/static/**").addResourceLocations("/", "file:translateWeb/").addResourceLocations("/", "classpath:/translateWeb/");
 	}
 	  @Override
 	  public void addInterceptors(InterceptorRegistry registry) {

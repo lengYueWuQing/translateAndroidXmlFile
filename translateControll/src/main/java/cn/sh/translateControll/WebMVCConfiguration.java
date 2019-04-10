@@ -8,16 +8,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMVCConfiguration implements WebMvcConfigurer {
-	
+
 	@Autowired
 	private InterceptorForContext interceptorForContext;
-	
+
+	@Override
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/static/**").addResourceLocations("/", "file:translateWeb/").addResourceLocations("/", "classpath:/translateWeb/");
+		registry.addResourceHandler("/static/**").addResourceLocations("/", "file:translateWeb/")
+				.addResourceLocations("/", "classpath:/translateWeb/");
 	}
-	  @Override
-	  public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(interceptorForContext).addPathPatterns("/json/**");
-    }
-	
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(interceptorForContext).addPathPatterns("/json/**");
+	}
+
 }

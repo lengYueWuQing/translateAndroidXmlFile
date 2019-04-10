@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-
 import com.alibaba.fastjson.JSONObject;
 
 import cn.sh.translateService.ResponseUtils;
@@ -54,8 +53,8 @@ public class InterceptorForContext implements HandlerInterceptor {
 				Object dataObject = json.get("data");
 				
 				if(dataObject!=null){
-					Object headObject = json.get("data");
-				    Object pageObject = json.get("data");
+					Object headObject = json.get("head");
+				    Object pageObject = json.get("page");
 					request.setAttribute("data", dataObject.toString().trim());
 					request.setAttribute("page", pageObject!=null ? pageObject.toString().trim():null);
 					request.setAttribute("head", headObject!=null ? headObject.toString().trim():null);

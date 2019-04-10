@@ -18,7 +18,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 	  http.formLogin()          // 定义当需要用户登录时候，转到的登录页面。
 	      .loginPage("/index.html")      // 设置登录页面
-	      .loginProcessingUrl("/json/index") // 自定义的登录接口
+	      //.loginProcessingUrl("/json/index") // 自定义的登录接口
 	      .and()
 	      .authorizeRequests()    // 定义哪些URL需要被保护、哪些不需要被保护
 	      .antMatchers("/index.html","/","index").permitAll()   // 设置所有人都可以访问登录页面

@@ -37,11 +37,11 @@ public class UploadAnalyze {
 	public void run(HttpServletRequest request, HttpServletResponse response) {
 		LOG.debug("解析文件开始");
 
-		JSONObject jSONObject = ResponseUtils.getDataObject(request, response);
+		JSONObject jSONObject = RequestUtils.getDataObject(request, response);
 		if (jSONObject == null) {
 			return;
 		}
-		String filePath = ResponseUtils.getParamStr(jSONObject.get("fipa"));
+		String filePath = RequestUtils.getParamStr(jSONObject.get("fipa"));
 		if (filePath == null) {
 			ResponseUtils.setErrorMessage(response, "fipa变量未获取内容");
 			return;

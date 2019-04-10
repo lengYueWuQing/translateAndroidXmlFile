@@ -43,11 +43,11 @@ public class UpdateXml {
 	
 	public void run(HttpServletRequest request, HttpServletResponse response){
 		LOG.debug("修改xml开始");
-		JSONObject jSONObject = ResponseUtils.getDataObject(request, response);
+		JSONObject jSONObject = RequestUtils.getDataObject(request, response);
 		if (jSONObject == null) {
 			return;
 		}
-		String filePath = ResponseUtils.getParamStr(jSONObject.get("fipa"));
+		String filePath = RequestUtils.getParamStr(jSONObject.get("fipa"));
 		if (filePath == null) {
 			ResponseUtils.setErrorMessage(response, "fipa变量未获取内容");
 		}
@@ -65,11 +65,11 @@ public class UpdateXml {
 		Map<String, String> translatedatas = new HashMap<String, String>();
 		for(int i=0;i<JSONArray.size();i++){
 			JSONObject jsonObject2 = JSONArray.getJSONObject(i);
-			String name = ResponseUtils.getParamStr(jsonObject2.get("name"));
+			String name = RequestUtils.getParamStr(jsonObject2.get("name"));
 			if("".equals(name)){
 				continue;
 			}
-			String trco = ResponseUtils.getParamStr(jsonObject2.get("trco"));
+			String trco = RequestUtils.getParamStr(jsonObject2.get("trco"));
 			if("".equals(trco)){
 				continue;
 			}

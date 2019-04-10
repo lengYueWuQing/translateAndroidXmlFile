@@ -26,7 +26,7 @@ public class Translate {
 	public void run(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		LOG.debug("翻译开始");
 		List<String> splitArr = Arrays.asList(" ;;;;; "," ;;;;;; "," ;;;;;; ");
-		JSONArray jSONArray = ResponseUtils.getDataArray(request, response);
+		JSONArray jSONArray = RequestUtils.getDataArray(request, response);
 		if(jSONArray==null){
 			return;
 		}
@@ -50,7 +50,7 @@ public class Translate {
 			if(nameOb==null || "".equals(name = nameOb.toString().trim())){
 				continue;
 			}
-			String con = ResponseUtils.getParamStr(json.get("con"));
+			String con = RequestUtils.getParamStr(json.get("con"));
 			if("".equals(con)){
 				continue;
 			}

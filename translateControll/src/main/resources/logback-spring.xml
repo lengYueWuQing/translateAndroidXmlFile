@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+    <property resource="application.properties" />
+    <property name="logPath" value="${log_path}"/>
+    <property name="logLevel" value="${log_level}"/>
+
 	<!-- Console 输出设置 -->
 	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -11,11 +15,11 @@
 	<!-- 文件保存日志的相关配置 -->
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 
-        <file>tmp/export.log</file>
+        <file>${logPath}</file>
         
 		<!-- 循环政策：基于时间创建日志文件 -->
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-      <fileNamePattern>/tmp/export.log.%i</fileNamePattern>
+      <fileNamePattern>${logPath}.%i</fileNamePattern>
       <minIndex>1</minIndex>
       <maxIndex>6</maxIndex>
     </rollingPolicy>
@@ -31,7 +35,7 @@
 	</appender>
 
 	<!-- 基于dubug处理日志：具体控制台或者文件对日志级别的处理还要看所在appender配置的filter，如果没有配置filter，则使用root配置 -->
-	<root level="info">
+	<root level="${logLevel}">
 		<appender-ref ref="Console" />
 		<appender-ref ref="FILE" />
 	</root>

@@ -1,10 +1,21 @@
 package cn.sh.translateControll;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.ApplicationPidFileWriter;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+
+import cn.sh.Utils.FileUtils;
 
 @SpringBootApplication
 @ComponentScan({"cn.sh.translateService","cn.sh.translateControll"})
@@ -32,10 +43,36 @@ public class Application {
 		
 	}*/
 	
-	public static void main(String[] args) {
+	public static String start(String[] args) {
 		LOG.info("启动SpringApplication");
+		//SpringApplication.run(Application.class, args);
+		String text = "start";
+		try {
+			File file = new File("./bin/shutdown.pid");
+			SpringApplicationBuilder app = new SpringApplicationBuilder(Application.class);
+			app.build().addListeners(new ApplicationPidFileWriter(file));
+			app.run();
+			text = "end";
+			try {
+				text = FileUtils.readToString(file);
+			} catch (IOException e) {
+				LOG.error("获取文件信息错误", e);
+				text = null;
+			}
+		} catch (Exception e) {
+			LOG.error("启动出错", e);
+		}
 		
-		SpringApplication.run(Application.class, args);
+		LOG.info("启动SpringApplication结束");
+		return text;
+		
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		start(args);
+		
 	}
 
 }

@@ -15,13 +15,17 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.HttpClientUtils;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLContexts;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-
 import com.alibaba.fastjson.JSONObject;
 
+@SuppressWarnings("deprecation")
 public class HttpUtils {
 	
 	private static RequestConfig defaultRequestConfig = RequestConfig.custom().setSocketTimeout(8000)
@@ -149,6 +153,7 @@ public class HttpUtils {
 	 * @return
 	 * @throws Exception
 	 */
+
 	public static String doPost(String url, StringEntity entity, Map<String, String> headers, RequestConfig requestConfig) throws Exception {
 		if(url==null || "".equals(url = url.trim())){
 			throw new Exception("url不存在");
@@ -157,7 +162,8 @@ public class HttpUtils {
 			requestConfig = defaultRequestConfig;
 		}
 		String result = null;
-		CloseableHttpClient httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig).build();
+		SSLConnectionSocketFactory scsf = new SSLConnectionSocketFactory(SSLContexts.custom().loadTrustMaterial(null, new TrustSelfSignedStrategy()).build(), NoopHostnameVerifier.INSTANCE);
+		CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(scsf).setDefaultRequestConfig(requestConfig).build();
 		HttpPost postRequest = new HttpPost(url);
 		if(headers!=null && headers.size()>0){
 			for(Map.Entry<String, String> header:headers.entrySet()){
